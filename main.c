@@ -38,24 +38,27 @@ int main(int argc, char **argv)
 	config.player.sprites[1] = get_sprite_from_id(spriteset, num_sprites, "player2");
 	config.player.sprites[2] = get_sprite_from_id(spriteset, num_sprites, "player3");
 	config.player.sprites[3] = get_sprite_from_id(spriteset, num_sprites, "player4");
-		
+	
+	ALLEGRO_BITMAP *img1 = get_sprite_from_id(spriteset, num_sprites, "grass1");
+	ALLEGRO_BITMAP *img2 = get_sprite_from_id(spriteset, num_sprites, "grass2");
+	
 	create_event_data(&config);
 	
 	config.timer_set.frame_timer = al_create_timer(1.0 / FPS);
 	config.timer_set.sprite_timer = al_create_timer(SPRITE_UPDATE_T);
 
+	init_tileset(tileset, &config, NUM_TILES, offset_x, offset_y);
+
 	if( ! display_init(&(config.display), SCREEN_RES_X, SCREEN_RES_Y, BASE_SIZE) )
 		exit(EXIT_FAILURE);
-
-	init_tileset(tileset, &config, NUM_TILES, offset_x, offset_y);
 
 	al_register_event_source(RPG_EVENT_QUEUE(config), al_get_display_event_source(RPG_DISPLAY(config)));
 	al_register_event_source(RPG_EVENT_QUEUE(config), al_get_keyboard_event_source() );
 	al_register_event_source(RPG_EVENT_QUEUE(config), al_get_timer_event_source(RPG_TIMER_SET(config).frame_timer));
 	al_register_event_source(RPG_EVENT_QUEUE(config), al_get_timer_event_source(RPG_TIMER_SET(config).sprite_timer));
 	
-	config.sprites[0] = al_load_bitmap("image1.png");
-	config.sprites[1] = al_load_bitmap("image2.png");
+	config.sprites[0] = al_load_bitmap("sprites/image1.png");
+	config.sprites[1] = al_load_bitmap("sprites/image2.png");
 		
 	int i;
 	for(i=0; i<NUM_TILES; i++) {
@@ -111,12 +114,17 @@ int main(int argc, char **argv)
 		}
 	}
 	
-	al_destroy_bitmap(config.sprites[0]);
-	al_destroy_bitmap(config.sprites[1]);
-	al_destroy_bitmap(config.player.sprites[0]);
-	al_destroy_bitmap(config.player.sprites[1]);
-	al_destroy_bitmap(config.player.sprites[2]);
-	al_destroy_bitmap(config.player.sprites[3]);
+	//al_destroy_bitmap(config.sprites[0]);
+	//al_destroy_bitmap(config.sprites[1]);
+	//al_destroy_bitmap(config.player.sprites[0]);
+	//al_destroy_bitmap(config.player.sprites[1]);
+	//al_destroy_bitmap(config.player.sprites[2]);
+	//al_destroy_bitmap(config.player.sprites[3]);
+	//al_destroy_bitmap(spriteset[0].sprite);
+	//al_destroy_bitmap(spriteset[1].sprite);
+	//al_destroy_bitmap(spriteset[2].sprite);
+	//al_destroy_bitmap(spriteset[3].sprite);
+	destroy_sprite_catalogue(spriteset, num_sprites);
 
 	return 0;
 }

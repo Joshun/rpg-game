@@ -39,8 +39,8 @@ static int prepare_sprite_catalog(rpgSprite *spriteset, int num, FILE *spritecfg
 		//fname_buffer[i - 1] = '\0';
 		fname_buffer[i] = '\0';
 
-		printf("Sprite name read: %s\n", sprname_buffer);
-		printf("File name read: %s\n", fname_buffer);
+		//printf("Sprite name read: %s\n", sprname_buffer);
+		//printf("File name read: %s\n", fname_buffer);
 		
 		strncpy(spriteset[spr_index].id, sprname_buffer, (200 - 1));
 		test_p = al_load_bitmap(fname_buffer);
@@ -48,12 +48,12 @@ static int prepare_sprite_catalog(rpgSprite *spriteset, int num, FILE *spritecfg
 		if( test_p )
 		{
 			spriteset[spr_index].sprite = test_p;
-			printf("Loaded\n");
+			//printf("Loaded\n");
 		}
 		else
 			return 0;
 		index = 0;
-		
+
 		memset(sprname_buffer, '\0', strlen(sprname_buffer));
 		memset(fname_buffer, '\0', strlen(fname_buffer));
 
@@ -93,17 +93,18 @@ int make_sprite_catalog(const char *cfgfile, rpgSprite **spriteptr)
 		return 0;
 	}
 	
-	num_sprites = get_num_sprites(fp); printf("Total: %d sprites\n", num_sprites);
+	num_sprites = get_num_sprites(fp);
+	printf("Total: %d sprites\n", num_sprites);
 	if( num_sprites < 1)
 	{
 		return 0;
 	}
-	
+
 	spritearr = malloc(num_sprites * sizeof(rpgSprite));
 	if( prepare_sprite_catalog(spritearr, num_sprites, fp) ) {
 		fclose(fp);
 		*spriteptr = spritearr;
-		//printf("Address 1: %p\n", *spriteptr);
+		printf("Catalogue loaded (%d sprites)\n", num_sprites);
 		return num_sprites;
 	}
 	else {
@@ -114,12 +115,15 @@ int make_sprite_catalog(const char *cfgfile, rpgSprite **spriteptr)
 }
 
 void destroy_sprite_catalogue(rpgSprite *spritearr, int num)
-{
-	free(spritearr);
-	
+{	
+	printf("Cleaning up...\n");
 	int i;
 	for(i=0; i<num; i++) {
-		if( spritearr[i].sprite )
+		if( spritearr[i].sprite ) {
+			printf("%d...", i); fflush(stdout);
 			al_destroy_bitmap(spritearr[i].sprite);
+		}
 	}
+	free(spritearr);
+	printf("\nDone\n");
 }

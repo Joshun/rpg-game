@@ -30,9 +30,9 @@ int display_init(displayData *display, int res_x, int res_y, int bsize)
 void init_tileset(rpgTile *tilearr, gameData *data, int num, int pos_x, int pos_y)
 {	
 	/* Generates and sets values for x1, x4, y1, y4 for a tileset */
-	int scr_w = data->display.res_x;
-	int scr_h = data->display.res_y;
-	int base_size = data->display.base_size;
+	int scr_w = SCREEN_RES_X;
+	int scr_h = SCREEN_RES_Y;
+	int base_size = BASE_SIZE;
 	int tolerance = data->player.tolerance;
 	
 	int max_y_iter = scr_h / base_size;
