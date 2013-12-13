@@ -75,7 +75,7 @@ int draw_tiles(rpgTile *tilearr, displayData *display, int num)
 			DRAW_SPRITE(tilearr[i].sprite, tilearr[i].x1, tilearr[i].y1);
 		else
 		{
-			printf("Error: cannot draw sprite (index=%d, addr=%p)", i, tilearr[i]);
+			printf("Error: cannot draw sprite (index=%d, addr=%p)\n", i, tilearr[i]);
 			return 0;
 		}
 	}
@@ -85,7 +85,10 @@ int draw_tiles(rpgTile *tilearr, displayData *display, int num)
 void draw_player(playerData *player)
 {
 	//al_draw_filled_rectangle(player->x1, player->y1, player->x4, player->y4, player->pcolour);
-	DRAW_SPRITE(player->sprites[player->current_sprite], player->x1, player->y1);
+	if( player->sprites[player->current_sprite] )
+		DRAW_SPRITE(player->sprites[player->current_sprite], player->x1, player->y1);
+	else
+		printf("Error: cannot draw player sprite (#%d)\n", player->current_sprite);
 }
 
 void draw_health(playerData *player)
