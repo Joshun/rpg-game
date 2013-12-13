@@ -12,6 +12,7 @@
 #define BASE_SIZE 32
 #define FPS 30
 
+#define NUM_KEYS 6
 #define NUM_TILES ( SCREEN_RES_X / BASE_SIZE ) * (SCREEN_RES_Y / BASE_SIZE )
 /*===========================*/
 
@@ -26,6 +27,14 @@
 #define HBAR_HEIGHT 10
 #define HBAR_X_OFFSET 400
 #define HBAR_Y_OFFSET 5
+/*===========================*/
+
+/*===Inventory Settings======*/
+#define INV_SIZE 200
+#define INV_X1 (SCREEN_RES_X / 2) - INV_SIZE
+#define INV_Y1 (SCREEN_RES_Y / 2) - INV_SIZE
+#define INV_X4 (SCREEN_RES_X / 2) + INV_SIZE
+#define INV_Y4 (SCREEN_RES_Y / 2) + INV_SIZE
 /*===========================*/
 
 #define BIT_ITER(iter) ( 1 << iter )
@@ -48,7 +57,8 @@ typedef struct {
 	ALLEGRO_COLOR pcolour;
 	ALLEGRO_BITMAP *sprites[NUM_PLAYER_SPRITES];
 	int current_sprite;
-	int inventory;
+	int inventory; /* Bitmask for inventory */
+	int inventory_open;
 	float health; /* Health 0.0 - 10.0 */
 } playerData;
 
@@ -70,10 +80,10 @@ typedef struct {
 	eventData event_set;
 	timerData timer_set;
 	ALLEGRO_BITMAP *sprites[2];
-	int keys[5];
+	int keys[NUM_KEYS];
 } gameData;
 
-enum PLAYER_KEYS { KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ACTION };
+enum PLAYER_KEYS { KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ACTION, KEY_INV };
 
 enum INVENTORY_ITEMS { KEY_1 = BIT_ITER(0), KEY_2 = BIT_ITER(1) };
 
@@ -96,6 +106,7 @@ int display_init(displayData *display, int res_x, int res_y, int bsize);
 int draw_tiles(rpgTile *tilearr, displayData *display, int num);
 void draw_player(playerData *player);
 void draw_health(playerData *player);
+void draw_inventory(playerData *player);
 
 int make_tile_set(rpgTile *tileset, int num_tiles, rpgSprite *spriteset, int num_sprites, char sprite_ids[NUM_TILES][BUFFER_SUB_SIZE]);
 ALLEGRO_BITMAP *get_sprite_from_id(rpgSprite *spriteset, int num, char *sprite_id);
@@ -105,6 +116,7 @@ void init_tileset(rpgTile *tilearr, gameData *data, int num, int pos_x, int pos_
 void poll_intersect(rpgTile *tilearr, gameData *data, int num);
 void process_player(playerData *player, int keys[5]);
 int update_sprite(int *current, int max);
+void toggle_inventory(playerData *player, int keys[NUM_KEYS]);
 
 int make_sprite_catalog(const char *cfgfile, rpgSprite **spriteptr);
 void destroy_sprite_catalogue(rpgSprite *spritearr, int num);

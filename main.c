@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	ALLEGRO_DISPLAY *display_ptr;
 	gameData config;
 	config.quit = 0;
-	config.keys[0] = 0; config.keys[1] = 0; config.keys[2] = 0; config.keys[3] = 0; config.keys[4] = 0; config.keys[5] = 0; config.keys[6] = 0;
+	config.keys[0] = 0; config.keys[1] = 0; config.keys[2] = 0; config.keys[3] = 0; config.keys[4] = 0; config.keys[5] = 0;
 	
 	int offset_x = 0, offset_y = 0;
 
@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 	al_register_event_source(RPG_EVENT_QUEUE(config), al_get_timer_event_source(RPG_TIMER_SET(config).frame_timer));
 	al_register_event_source(RPG_EVENT_QUEUE(config), al_get_timer_event_source(RPG_TIMER_SET(config).sprite_timer));
 	
-	config.sprites[0] = al_load_bitmap("sprites/image1.png");
-	config.sprites[1] = al_load_bitmap("sprites/image2.png");
+	//config.sprites[0] = al_load_bitmap("sprites/image1.png");
+	//config.sprites[1] = al_load_bitmap("sprites/image2.png");
 
 	int num_sprites = make_sprite_catalog("sprites/index.dat", &spriteset);
 
@@ -61,6 +61,9 @@ int main(int argc, char **argv)
 	ALLEGRO_BITMAP *grass1 = get_sprite_from_id(spriteset, num_sprites, "grass1");
 	ALLEGRO_BITMAP *grass2 = get_sprite_from_id(spriteset, num_sprites, "grass2");
 
+	config.sprites[0] = grass1;
+	config.sprites[1] = grass2;
+	
 	int i;
 	for(i=0; i<NUM_TILES; i++) {
 		tileset[i].sprite = grass1;
