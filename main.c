@@ -28,20 +28,7 @@ int main(int argc, char **argv)
 	config.player.health = 10.0;
 
 	game_init();
-	int num_sprites = make_sprite_catalog("sprites/index.dat", &spriteset);
 
-	
-	config.player.pcolour = al_map_rgb(255, 0, 255);
-	
-	config.player.sprites[0] = get_sprite_from_id(spriteset, num_sprites, "player1");
-	//config.player.sprites[0] = al_load_bitmap("sprites/character/char_frame_1.png");
-	config.player.sprites[1] = get_sprite_from_id(spriteset, num_sprites, "player2");
-	config.player.sprites[2] = get_sprite_from_id(spriteset, num_sprites, "player3");
-	config.player.sprites[3] = get_sprite_from_id(spriteset, num_sprites, "player4");
-	
-	ALLEGRO_BITMAP *img1 = get_sprite_from_id(spriteset, num_sprites, "grass1");
-	ALLEGRO_BITMAP *img2 = get_sprite_from_id(spriteset, num_sprites, "grass2");
-	
 	create_event_data(&config);
 	
 	config.timer_set.frame_timer = al_create_timer(1.0 / FPS);
@@ -59,10 +46,24 @@ int main(int argc, char **argv)
 	
 	config.sprites[0] = al_load_bitmap("sprites/image1.png");
 	config.sprites[1] = al_load_bitmap("sprites/image2.png");
-		
+
+	int num_sprites = make_sprite_catalog("sprites/index.dat", &spriteset);
+
+	
+	config.player.pcolour = al_map_rgb(255, 0, 255);
+	
+	config.player.sprites[0] = get_sprite_from_id(spriteset, num_sprites, "player1");
+	//config.player.sprites[0] = al_load_bitmap("sprites/character/char_frame_1.png");
+	config.player.sprites[1] = get_sprite_from_id(spriteset, num_sprites, "player2");
+	config.player.sprites[2] = get_sprite_from_id(spriteset, num_sprites, "player3");
+	config.player.sprites[3] = get_sprite_from_id(spriteset, num_sprites, "player4");
+	
+	ALLEGRO_BITMAP *grass1 = get_sprite_from_id(spriteset, num_sprites, "grass1");
+	ALLEGRO_BITMAP *grass2 = get_sprite_from_id(spriteset, num_sprites, "grass2");
+
 	int i;
 	for(i=0; i<NUM_TILES; i++) {
-		tileset[i].sprite = config.sprites[0];
+		tileset[i].sprite = grass1;
 		tileset[i].action = NULL;
 	}
 	
