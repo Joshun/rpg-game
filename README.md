@@ -1,6 +1,6 @@
 #Work in Progress!
 To compile on Ubuntu / Debian, do:
 
-sudo apt-get install liballegro5-dev
+`sudo apt-get install liballegro5-dev`
 
-*(in source dir)* make
+*(in source dir)* `make`
