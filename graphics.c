@@ -97,6 +97,12 @@ void draw_health(playerData *player)
 	al_draw_filled_rectangle(HBAR_X_OFFSET, HBAR_Y_OFFSET, x4, y4, al_map_rgb(255, 0, 0));
 }
 
+void draw_inventory(playerData *player)
+{
+	if( player->inventory_open )
+		al_draw_filled_rectangle(INV_X1, INV_Y1, INV_X4, INV_Y4, al_map_rgb(202, 204, 200));
+}
+
 ALLEGRO_BITMAP *get_sprite_from_id(rpgSprite *spriteset, int num, char *sprite_id)
 {
 	int i;

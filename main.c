@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	ALLEGRO_DISPLAY *display_ptr;
 	gameData config;
 	config.quit = 0;
-	config.keys[0] = 0; config.keys[1] = 0; config.keys[2] = 0; config.keys[3] = 0; config.keys[4] = 0; config.keys[5] = 0;
+	config.keys[0] = 0; config.keys[1] = 0; config.keys[2] = 0; config.keys[3] = 0; config.keys[4] = 0; config.keys[5] = 0; config.keys[6] = 0;
 	
 	int offset_x = 0, offset_y = 0;
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 
 	int num_sprites = make_sprite_catalog("sprites/index.dat", &spriteset);
 
-	
+	config.player.inventory_open = 0;
 	config.player.pcolour = al_map_rgb(255, 0, 255);
 	
 	config.player.sprites[0] = get_sprite_from_id(spriteset, num_sprites, "player1");
@@ -93,6 +93,7 @@ int main(int argc, char **argv)
 					draw_tiles(tileset, &(config.display), NUM_TILES);
 					draw_player(&(config.player));
 					draw_health(&(config.player));
+					draw_inventory(&(config.player));
 					al_flip_display();
 				}
 				else if (RPG_EVENT(config).timer.source == config.timer_set.sprite_timer )
@@ -109,6 +110,7 @@ int main(int argc, char **argv)
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
 				process_keyboard(&(RPG_EVENT(config)), config.keys, 1);
+				toggle_inventory(&(config.player), config.keys);
 				if( config.keys[0] || config.keys[1] || config.keys[2] || config.keys[3] )
 					al_start_timer(RPG_TIMER_SET(config).sprite_timer);
 				break;
@@ -126,6 +128,9 @@ int main(int argc, char **argv)
 	//al_destroy_bitmap(spriteset[2].sprite);
 	//al_destroy_bitmap(spriteset[3].sprite);
 	destroy_sprite_catalogue(spriteset, num_sprites);
+	al_destroy_display(config.display.disp_ptr);
+	al_destroy_timer(config.timer_set.frame_timer);
+	al_destroy_timer(config.timer_set.sprite_timer);
 
 	return 0;
 }

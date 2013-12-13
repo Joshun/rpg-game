@@ -54,7 +54,7 @@ void poll_intersect(rpgTile *tilearr, gameData *data, int num)
 		
 }
 
-void process_keyboard(ALLEGRO_EVENT *events, int keys[5], int mode)
+void process_keyboard(ALLEGRO_EVENT *events, int keys[NUM_KEYS], int mode)
 {
 	
 	switch( events->keyboard.keycode ) {
@@ -73,10 +73,13 @@ void process_keyboard(ALLEGRO_EVENT *events, int keys[5], int mode)
 		case ALLEGRO_KEY_SPACE:
 			keys[KEY_ACTION] = mode;
 			break;
+		case ALLEGRO_KEY_I:
+			keys[KEY_INV] = mode;
+			break;
 	}
 }
 
-void process_player(playerData *player, int keys[5])
+void process_player(playerData *player, int keys[NUM_KEYS])
 {
 	//printf("%d\n", player->y1); exit(1);
 	if( keys[KEY_UP] )
@@ -116,4 +119,14 @@ int update_sprite(int *current, int max)
 		return 0;
 	}
 }
-	
+
+void toggle_inventory(playerData *player, int keys[NUM_KEYS])
+{
+	if( keys[KEY_INV] )
+	{
+		if(player->inventory_open == 0)
+			player->inventory_open = 1;
+		else
+			player->inventory_open = 0;
+	}
+}
