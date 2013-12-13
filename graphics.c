@@ -69,26 +69,16 @@ void init_tileset(rpgTile *tilearr, gameData *data, int num, int pos_x, int pos_
 
 int draw_tiles(rpgTile *tilearr, displayData *display, int num)
 {
-	int scr_w = display->res_x;
-	int scr_h = display->res_y;
-	int base_size = display->base_size;
-	
-	//int cur_x = pos_x, cur_y = pos_y; /* Draw 'cursor' */
-	
-	if( scr_h % base_size != 0 || scr_w % base_size != 0) /* Check to make sure the tiles will fit cleanly on the screen */
-	{
-		printf("Error: screen dimensions don't divide by base size without remainder, aborting...\n");
-		return 0;
-	}
-	
-	//int max_y_iter = scr_h / base_size;
-	//int max_x_iter = scr_w / base_size;
-	//printf("Max x:%d, Max y:%d\n", max_x_iter, max_y_iter);
-	int i, j;
+	int i;
 	for(i=0; i<num; i++) {
-		DRAW_SPRITE(tilearr[i].sprite, tilearr[i].x1, tilearr[i].y1);
+		if( tilearr[i].sprite )
+			DRAW_SPRITE(tilearr[i].sprite, tilearr[i].x1, tilearr[i].y1);
+		else
+		{
+			printf("Error: cannot draw sprite (index=%d, addr=%p)", i, tilearr[i]);
+			return 0;
+		}
 	}
-	//al_flip_display();
 	return 1;
 }
 
