@@ -127,3 +127,84 @@ void destroy_sprite_catalogue(rpgSprite *spritearr, int num)
 	free(spritearr);
 	printf("\nDone\n");
 }
+
+static int check_char(char cchar, int *pos)
+{
+	//printf("Char %c\n", cchar);
+	switch(cchar) {
+		case '\0':
+		case EOF:
+			return 0;
+			break;
+		case ',':
+		case '\n':
+			*pos = *pos + 1;
+			return 2;
+			break;
+	}
+}
+
+int copy_to_from_pos(char *dest, char *src, int start_pos, int end_pos)
+{
+	int i, s_index = 0;
+	for(i = start_pos; i < end_pos; i++)
+	{
+		if( ! src[i] )
+			break;
+		else {
+			dest[s_index] = src[i];
+			s_index++;
+		}
+	}
+	dest[s_index] = '\0';
+	return s_index;
+}
+
+int get_map_from_file(char *cfgfile, rpgTile *tilearr, int num_tiles, rpgSprite *spritearr, int num_sprites)
+{
+	FILE *fp = NULL;
+	ALLEGRO_BITMAP *test_p = NULL;
+	
+	if( ! (fp = fopen(cfgfile, "r")) )
+		return 0;
+	
+	char read_buffer[10000] = { 0 };
+	char temp_buffer[5000] = { 0 };
+	
+	if( ! fread(read_buffer, 1, sizeof(read_buffer) - 1, fp) )
+	{
+		fclose(fp);
+		return 0;
+	}
+	
+	int status = 0;
+	int current_pos = 0;
+	int start_pos = 0, end_pos = 0;
+	int tiles_read = 0;
+	
+	while( tiles_read < num_tiles ) {
+		status = check_char(read_buffer[current_pos], &current_pos);
+		if( status == 0 ) {
+			printf("Finished\n");
+			fclose(fp);
+			return 0;
+		}
+
+		else if( status == 2 ) {
+			end_pos = current_pos;
+			//strncpy(temp_buffer, (read_buffer + current_pos), (end_pos - start_pos));
+			copy_to_from_pos(temp_buffer, read_buffer, start_pos, end_pos - 1);
+			printf("Result: %s\n", temp_buffer);
+			if( (test_p = get_sprite_from_id(spritearr, num_sprites, temp_buffer)))
+				tilearr[tiles_read].sprite = test_p;
+			else
+				tilearr[tiles_read].sprite = NULL;
+			
+			start_pos = current_pos;
+			tiles_read++;
+		}
+		current_pos++;
+	}
+	fclose(fp);
+}
+			

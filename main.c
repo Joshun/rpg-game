@@ -70,12 +70,11 @@ int main(int argc, char **argv)
 		tileset[i].action = NULL;
 	}
 	
-	//poll_intersect(tileset, &config, num_tiles);
-	//draw_tiles(tileset, &(config.display), num_tiles);
-	//al_draw_filled_rectangle(player.x1, player.y1, player.x4, player.y4, player.pcolour);
+	//get_map_from_file("test.csv", tileset, NUM_TILES, spriteset, num_sprites);
+	
+	
 	draw_player(&(config.player));
 	al_flip_display();
-	//sleep(2);
 	
 	al_start_timer(RPG_TIMER_SET(config).frame_timer);
 	while( ! config.quit ) {
