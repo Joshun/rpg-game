@@ -97,6 +97,7 @@ int make_sprite_catalog(const char *cfgfile, rpgSprite **spriteptr)
 	printf("Total: %d sprites\n", num_sprites);
 	if( num_sprites < 1)
 	{
+		fclose(fp);
 		return 0;
 	}
 
@@ -141,6 +142,8 @@ static int check_char(char cchar, int *pos)
 			*pos = *pos + 1;
 			return 2;
 			break;
+		default:
+			return 1;
 	}
 }
 
