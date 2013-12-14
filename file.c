@@ -144,7 +144,7 @@ static int check_char(char cchar, int *pos)
 	}
 }
 
-int copy_to_from_pos(char *dest, char *src, int start_pos, int end_pos)
+static int copy_to_from_pos(char *dest, char *src, int start_pos, int end_pos)
 {
 	int i, s_index = 0;
 	for(i = start_pos; i < end_pos; i++)
