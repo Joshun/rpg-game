@@ -111,6 +111,7 @@ void draw_inventory(playerData *player);
 int make_tile_set(rpgTile *tileset, int num_tiles, rpgSprite *spriteset, int num_sprites, char sprite_ids[NUM_TILES][BUFFER_SUB_SIZE]);
 ALLEGRO_BITMAP *get_sprite_from_id(rpgSprite *spriteset, int num, char *sprite_id);
 int get_sprite_index(rpgSprite *spriteset, int num, char *sprite_id);
+int get_map_from_file(char *cfgfile, rpgTile *tilearr, int num_tiles, rpgSprite *spritearr, int num_sprites);
 
 void init_tileset(rpgTile *tilearr, gameData *data, int num, int pos_x, int pos_y);
 void poll_intersect(rpgTile *tilearr, gameData *data, int num);
