@@ -27,6 +27,8 @@ int main(int argc, char **argv)
 	config.player.current_sprite = 0;
 	config.player.health = 10.0;
 
+	characterData enemy1;
+
 	game_init();
 
 	create_event_data(&config);
@@ -70,7 +72,7 @@ int main(int argc, char **argv)
 		tileset[i].action = NULL;
 	}
 	
-	//get_map_from_file("test.csv", tileset, NUM_TILES, spriteset, num_sprites);
+	//get_map_from_file("maps/test_map_1.csv", tileset, NUM_TILES, spriteset, num_sprites);
 	
 	
 	draw_player(&(config.player));
@@ -96,6 +98,11 @@ int main(int argc, char **argv)
 					draw_player(&(config.player));
 					draw_health(&(config.player));
 					draw_inventory(&(config.player));
+					
+					/* Add any experimental code here */
+					draw_fight_scene(&(config.player), &enemy1);
+					/*================================*/
+					
 					al_flip_display();
 				}
 				else if (RPG_EVENT(config).timer.source == config.timer_set.sprite_timer )

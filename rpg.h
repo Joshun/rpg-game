@@ -14,12 +14,14 @@
 
 #define NUM_KEYS 6
 #define NUM_TILES ( SCREEN_RES_X / BASE_SIZE ) * (SCREEN_RES_Y / BASE_SIZE )
+#define SCREEN_CENTRE_X (SCREEN_RES_X / 2)
+#define SCREEN_CENTRE_Y (SCREEN_RES_Y / 2)
 /*===========================*/
 
 /*======Player Settings======*/
 #define NUM_PLAYER_SPRITES 4
 #define PLAYER_SPEED 4
-#define SPRITE_UPDATE_T 0.1
+#define SPRITE_UPDATE_T 0.1 /* Speed at which animated sprite changes */
 /*===========================*/
 
 /*====Health Bar Settings====*/
@@ -30,12 +32,25 @@
 /*===========================*/
 
 /*===Inventory Settings======*/
+/* Centred in middle of screen, adjust size here */
 #define INV_SIZE 200
-#define INV_X1 (SCREEN_RES_X / 2) - INV_SIZE
-#define INV_Y1 (SCREEN_RES_Y / 2) - INV_SIZE
-#define INV_X4 (SCREEN_RES_X / 2) + INV_SIZE
-#define INV_Y4 (SCREEN_RES_Y / 2) + INV_SIZE
+#define INV_X1 SCREEN_CENTRE_X - INV_SIZE
+#define INV_Y1 SCREEN_CENTRE_Y - INV_SIZE
+#define INV_X4 SCREEN_CENTRE_X + INV_SIZE
+#define INV_Y4 SCREEN_CENTRE_Y + INV_SIZE
 /*===========================*/
+
+/*===Fight Scene Settings*/
+#define CHARACTER_ZOOM_FACTOR 4
+#define CHARACTER_OFFSET 40 /* Character spacing distance from centre */
+#define CHARACTER_ZOOM_SIZE (BASE_SIZE * CHARACTER_ZOOM_FACTOR)
+
+#define PLAYER_X_COORD (SCREEN_CENTRE_X - (BASE_SIZE / 2) - CHARACTER_ZOOM_SIZE / 2) - CHARACTER_OFFSET
+#define PLAYER_Y_COORD SCREEN_CENTRE_Y - (BASE_SIZE / 2) - CHARACTER_ZOOM_SIZE / 2
+
+#define ENEMY_X_COORD (SCREEN_CENTRE_X + CHARACTER_ZOOM_SIZE + CHARACTER_OFFSET)
+#define ENEMY_Y_COORD SCREEN_CENTRE_Y
+
 
 #define BIT_ITER(iter) ( 1 << iter )
 
@@ -61,6 +76,17 @@ typedef struct {
 	int inventory_open;
 	float health; /* Health 0.0 - 10.0 */
 } playerData;
+
+typedef struct {
+	char *name;
+	int x1, x4;
+	int y1, y4;
+	ALLEGRO_COLOR pcolor;
+	ALLEGRO_BITMAP *sprites[NUM_PLAYER_SPRITES];
+	int current_health;
+	int type; /* Type of character (i.e. ally, enemy etc. ) */
+	float health;
+} characterData;
 
 typedef struct {
 	ALLEGRO_EVENT_QUEUE *event_queue;
@@ -107,6 +133,7 @@ int draw_tiles(rpgTile *tilearr, displayData *display, int num);
 void draw_player(playerData *player);
 void draw_health(playerData *player);
 void draw_inventory(playerData *player);
+void draw_fight_scene(playerData *player, characterData *enemy);
 
 int make_tile_set(rpgTile *tileset, int num_tiles, rpgSprite *spriteset, int num_sprites, char sprite_ids[NUM_TILES][BUFFER_SUB_SIZE]);
 ALLEGRO_BITMAP *get_sprite_from_id(rpgSprite *spriteset, int num, char *sprite_id);

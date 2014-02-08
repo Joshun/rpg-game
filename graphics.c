@@ -106,6 +106,14 @@ void draw_inventory(playerData *player)
 		al_draw_filled_rectangle(INV_X1, INV_Y1, INV_X4, INV_Y4, al_map_rgb(202, 204, 200));
 }
 
+void draw_fight_scene(playerData *player, characterData *enemy)
+{
+	al_draw_scaled_bitmap(player->sprites[0], 0, 0, BASE_SIZE, BASE_SIZE, PLAYER_X_COORD, PLAYER_Y_COORD, CHARACTER_ZOOM_SIZE, CHARACTER_ZOOM_SIZE, 0);
+	
+	printf("Drawing fight sequence...\n");
+	printf("SRC(%d,%d) SCL(%d, %d)\n", 0, 0, PLAYER_X_COORD, PLAYER_Y_COORD);
+	/* add enemy draw code here */
+}
 ALLEGRO_BITMAP *get_sprite_from_id(rpgSprite *spriteset, int num, char *sprite_id)
 {
 	int i;
