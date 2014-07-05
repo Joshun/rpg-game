@@ -75,7 +75,7 @@ int draw_tiles(rpgTile *tilearr, displayData *display, int num)
 			DRAW_SPRITE(tilearr[i].sprite, tilearr[i].x1, tilearr[i].y1);
 		else
 		{
-			printf("Error: cannot draw sprite (index=%d, addr=%p)\n", i, tilearr[i]);
+			printf("Error: cannot draw sprite (index=%d, addr=%p)\n", i, tilearr[i].sprite);
 			return 0;
 		}
 	}
