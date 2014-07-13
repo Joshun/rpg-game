@@ -75,7 +75,7 @@ int draw_tiles(rpgTile *tilearr, displayData *display, int num)
 			DRAW_SPRITE(tilearr[i].sprite, tilearr[i].x1, tilearr[i].y1);
 		else
 		{
-			printf("Error: cannot draw sprite (index=%d, addr=%p)\n", i, tilearr[i]);
+			printf("Error: cannot draw sprite (index=%d, addr=%p)\n", i, tilearr[i].sprite);
 			return 0;
 		}
 	}
@@ -110,8 +110,8 @@ void draw_fight_scene(playerData *player, characterData *enemy)
 {
 	al_draw_scaled_bitmap(player->sprites[0], 0, 0, BASE_SIZE, BASE_SIZE, PLAYER_X_COORD, PLAYER_Y_COORD, CHARACTER_ZOOM_SIZE, CHARACTER_ZOOM_SIZE, 0);
 	
-	printf("Drawing fight sequence...\n");
-	printf("SRC(%d,%d) SCL(%d, %d)\n", 0, 0, PLAYER_X_COORD, PLAYER_Y_COORD);
+	//printf("Drawing fight sequence...\n");
+	//printf("SRC(%d,%d) SCL(%d, %d)\n", 0, 0, PLAYER_X_COORD, PLAYER_Y_COORD);
 	/* add enemy draw code here */
 }
 ALLEGRO_BITMAP *get_sprite_from_id(rpgSprite *spriteset, int num, char *sprite_id)
